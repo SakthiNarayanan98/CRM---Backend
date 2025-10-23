@@ -1,0 +1,23 @@
+
+-- users (employees / counselors)
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- leads / enquiries
+CREATE TABLE IF NOT EXISTS leads (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255),
+  phone VARCHAR(50),
+  course_interest VARCHAR(255),
+  message TEXT,
+  claimed BOOLEAN DEFAULT FALSE,
+  counselor_id INTEGER DEFAULT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_counselor FOREIGN KEY (counselor_id) REFERENCES users(id) ON DELETE SET NULL
+);
